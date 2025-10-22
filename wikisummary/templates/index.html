@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <title>WikiSummary | Wikipedia要約サイト</title>
+        <style>
+            body {
+                font-family: "Helvetica Neue", sans-serif;
+                background: #f3f4f6;
+                color: #333;
+                margin: 0;
+                padding: 0;
+            }
+            header {
+                background: #2563eb;
+                color: white;
+                padding: 20px;
+                text-align: center;
+            }
+            main {
+                max-width: 800px;
+                margin: 40px auto;
+                background: white;
+                padding: 30px;
+                border-radius: 10px;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            }
+            h1 { margin: 0; }
+            form {
+                margin-bottom: 20px;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+            input[type="text"] {
+                padding: 10px;
+                font-size: 1rem;
+                border-radius: 6px;
+                border: none;
+            }
+            select, button {
+                padding: 10px;
+                font-size: 1rem;
+                border-radius: 6px;
+                border: none;
+            }
+            select { border: 1px solid #ccc;}
+            button {
+                background: #2563eb;
+                color: white;
+                cursor: pointer;
+            }
+            button:hover { background: #1d4ed8;}
+            .summary-box {
+                background: #f9fafb;
+                padding: 15px;
+                border-radius: 8px;
+                margin-top: 15px;
+                border-left: 4px solid #2563eb;
+            }
+            h2 { color: #2563eb ; border-bottom: 1px solid #ddd; padding-bottom: 5px; }
+            footer {
+                text-align: center;
+                margin-top: 40px;
+                color: #777;
+                font-size: 0.9rem;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <h1>WikiSummary</h1>
+            <p>Wikipediaの記事を３種類の長さで自動要約</p>
+        </header>
+
+        <main>
+            <form method="post">
+                <input type="text" name="keyword" value="{{ keyword  }}" placeholder="調べたいキーワードを入力" required>
+                <select name="lang">
+                    <option value="ja" {% if lang == "ja" %}selected{% endif %}>日本語</option>
+                    <option value="en" {% if lang == "en" %}selected{% endif %}>English</option>
+                </select>
+                <button type="submit">要約する</button>
+            </form>
+
+            {% if one_line %}
+                <h2>一言要約</h2>
+                <div class="summary-box"> {{ one_line }}</div>
+            {% endif %}
+            
+            {% if summary3 %}
+                <h2>3行要約</h2>
+                <div class="summary-box">{{ summary3 }}</div>
+            {% endif %}
+            
+            {% if summary5 %}
+                <h2>５行要約</h2>
+                <div class="summary-box">{{ summary5 }}</div>
+            {% endif %}    
+        </main>
+
+        <footer>
+            ©︎ WikiSummary | powered by Flask & Wikipedia API
+        </footer>
+    </body>
+</html>
